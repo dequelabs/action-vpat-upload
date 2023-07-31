@@ -1,0 +1,28 @@
+name: Upload VPAT
+description: Upload the most recent VPAT for your product to a shared s3 bucket
+author: Deque Systems, Inc.
+inputs:
+  aws-access-key-id:
+    description: AWS access key ID
+    required: true
+  aws-bucket:
+    description: AWS bucket name
+    required: true
+  aws-region:
+    description: AWS region
+    required: true
+  aws-secret-access-key:
+    description: AWS secret access key
+    required: true
+  product-name:
+    description: Human-readable product name
+    required: true
+  product-id:
+    description: Brief token that identifies your product - used to name s3 object
+    required: true
+  vpat-location:
+    description: Path to directory containing VPATs
+    default: vpats
+runs:
+  using: node16
+  main: dist/index.js

@@ -1,0 +1,28 @@
+{
+  "name": "action-vpat-upload",
+  "version": "0.1.0",
+  "description": "GitHub Action that uploads the most recent VPAT file to an S3 bucket",
+  "main": "dist/index.js",
+  "repository": "https://github.com/dequelabs/action-vpat-upload.git",
+  "author": "Deque Systems, Inc.",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "ncc build --source-map src/index.ts",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@aws-sdk/client-s3": "^3.382.0",
+    "marked": "^6.0.0",
+    "marked-gfm-heading-id": "^3.0.4",
+    "marked-mangle": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/marked": "^5.0.1",
+    "@types/node": "^20.4.5",
+    "@vercel/ncc": "^0.36.1",
+    "husky": "^8.0.3",
+    "typescript": "^5.1.6"
+  }
+}
