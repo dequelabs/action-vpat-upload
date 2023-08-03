@@ -47,4 +47,4 @@ jobs:
 ## Developer notes
 
 * The compiled `dist/` directory is committed to the `main` branch by running `npm run build` locally and committing the changes. The pre-commit hook should do this for you.
-* Commits to any branch will trigger the `Test` workflow, which uploads an example VPAT file to S3. Download the file from S3 and verify that the product name includes "(Created Last)".
+* Commits to any branch will trigger the `Test` workflow, which uploads a test VPAT file to S3. Download https://s3.amazonaws.com/deque-vpats/test.html and verify that the product name includes "(Created Last)".
