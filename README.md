@@ -1,13 +1,13 @@
-# action-vpat-upload
+# action-vpat-publish
 
-Upload the most recent VPAT in a repository to an S3 bucket.
+Publish the most recent VPAT in a repository to the product-docs site.
 
 ## Example workflow
 
-The following workflow will upload the most recent VPAT in the `vpats` directory to the `deque-vpats` S3 bucket. The VPAT will be named `my-product.html`.
+The following workflow will convert the most recent VPAT report in the `vpats` directory to HTML, and then create a pull request that submits it to the docs-site repository.
 
 ```yaml
-name: Upload VPAT
+name: Publish VPAT
 
 on:
   push:
@@ -17,16 +17,14 @@ on:
       - 'vpats/*'
 
 jobs:
-  upload-vpat:
+  publish-vpat:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: dequelabs/action-vpat-upload@main
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-east-1'
-          aws-bucket: 'deque-vpats'
+          docs-site-github-token: ${{ secrets.DOCS_SITE_GITHUB_TOKEN }}
+          docs-site-repository: 'dequelabs/<docs_site_repo>'
           product-name: 'My Product'
           product-id: 'my-product'
           vpat-location: vpats
@@ -36,15 +34,13 @@ jobs:
 
 | Name | Description | Default |
 | --- | --- | --- |
-`aws-access-key-id` | AWS access key ID. |
-`aws-secret-access-key` | AWS secret access key. |
-`aws-region` | Region of target AWS bucket. |
-`aws-bucket` | Name of target AWS bucket. |
-`product-name` | Name of the product. Human-readable. Used to generate a title for the generated HTML document. |
-`product-id` | ID for the product. A brief token with no spaces. Used to name the object that is uploaded to S3. |
+`docs-site-github-token` | GitHub token to access the docs-site repository. |
+`docs-site-repository` | GitHub repository containing the docs-site. |
+`product-name` | Human-readable product name. Used to generate a title for the generated HTML document. |
+`product-id` | Brief token that identifies your product. This should match the product ID used by the docs site. |
 `vpat-location` | Directory from which the most recent VPAT with be sourced. VPATs are expected to be in markdown format. | `vpats`
 
 ## Developer notes
 
 * The compiled `dist/` directory is committed to the `main` branch by running `npm run build` locally and committing the changes. The pre-commit hook should do this for you.
-* Commits to any branch will trigger the `Test` workflow, which uploads a test VPAT file to S3. Download https://s3.amazonaws.com/deque-vpats/test.html and verify that the product name includes "(Created Last)".
+* Since this action's test workflow creates a pull request, it is not configured to run automatically. To test this action, push a branch with your changes to GitHub, then trigger the `Test` workflow manually from the Actions view. You can then check the pull request that is created to see if the action worked as expected.

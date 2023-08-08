@@ -1,20 +1,17 @@
 name: Test
 
-on: push
+on: workflow_dispatch
 
 jobs:
-  # If successful, test.html will be uploaded to the bucket
-  # and will contain "(Created Last)" in the product name.
-  test:
+  main:
     runs-on: ubuntu-latest
     steps:
+      # Get the test vpat files
       - uses: actions/checkout@v3
+
       - uses: ./
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-east-1'
-          aws-bucket: 'deque-vpats'
+          docs-site-github-token: ${{ secrets.DOCS_SITE_GITHUB_TOKEN }}
           product-name: 'Test Product'
           product-id: 'test'
           vpat-location: 'test/vpats'

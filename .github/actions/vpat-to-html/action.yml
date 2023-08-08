@@ -1,0 +1,15 @@
+name: Convert VPAT to HTML
+description: Convert latest markdown VPAT to HTML
+author: Deque Systems, Inc.
+
+inputs:
+  product-name:
+    description: Human-readable product name
+    required: true
+  vpat-location:
+    description: Path to directory containing VPATs
+    default: vpats
+
+runs:
+  using: node16
+  main: dist/index.js

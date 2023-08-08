@@ -3,10 +3,9 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "noImplicitAny": true,
-    "outDir": "./dist",
     "skipLibCheck": true,
     "strict": true,
     "target": "es6"
   },
-  "include": ["./src/**/*"]
+  "include": ["src/**/*"]
 }
